@@ -1,0 +1,7 @@
+<% unless flash.now[:notices].empty? %>
+    <ul>
+        <% flash.now[:notices].each do |error|%>
+            <li><%= error %></li>
+        <%  %>
+    </ul>
+<% end %>
