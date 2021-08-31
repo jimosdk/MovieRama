@@ -1,0 +1,15 @@
+<h2>Sign up</h2>
+
+<%= render 'shared/errors' %>
+
+<form action="<%= users_url %>" method="post">
+    <%= auth_token %>
+
+    <label for="username">Username</label>
+    <input type="text" name="user[username]" id="username" value="<%= @user.username if @user %>" >
+
+    <label for="password">Password</label>
+    <input type="password" name="user[password]" id="password" value="<%= @user.password if @user %>">
+
+    <input type="submit" value="Sign up">
+</form>
