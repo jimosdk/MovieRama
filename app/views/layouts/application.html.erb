@@ -10,6 +10,22 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+        <h1>
+          <%= link_to 'MovieRama', movies_url %>
+        </h1>
+          <% if current_user %>
+            <small>Welcome back</small>
+            <%= link_to current_user.username, movies_url %>          <!-- Remember to change the action here to sort_movies_url when movie controller is implemented-->
+            <%= button_to 'Log out', session_url, method: :delete %>
+          <% else %>
+            <%= link_to 'Log in', new_session_url %> or 
+            <%= button_to 'Sign up', new_user_url,method: :get %>
+          <% end %>
+        </ul>
+      </nav>
+    </header>
     <%= yield %>
   </body>
 </html>
