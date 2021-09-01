@@ -1,0 +1,20 @@
+<section>
+<h1>Make a new movie post</h1>
+
+<%= render 'shared/errors' %>
+
+<form action="<%=movies_url%>" method="post">
+        <%= auth_token %>
+
+        <label for="title">Title</label>
+        <input type="text" name="movie[title]" value="<%= @movie.title %>">
+
+        <label for="description">Description</label>
+        <textarea name="movie[description]" id="description" cols="30" rows="10"><%= 
+            @movie.description 
+        %></textarea>
+    
+        <input type="submit" value="Post">
+</form>
+
+</section>
