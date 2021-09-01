@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new,:create,]
 
-  resources :movies, only: [:index]
+  resources :movies, only: [:index,:new,:create]
 
-  get '/' ,to: "movies#index"        #redirect controller ???
+  get '/' ,to: "movies#index"        
 end
