@@ -2,9 +2,12 @@
 
 <h2>Log in</h2>
 
+<!-- Displaying input errors-->
 <%= render 'shared/errors' %>
 
-<form action="<%= session_url %>" method="post">
+<!-- Passing filter params in order to preserve existing 
+filters during log in-->
+<form action="<%= session_url(filter: filter_params) %>" method="post">
     <%= auth_token %>
 
     <label for="username">Username</label>
