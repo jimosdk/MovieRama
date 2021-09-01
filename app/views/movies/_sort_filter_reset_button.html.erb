@@ -1,0 +1,14 @@
+<li>
+    <small>
+        <!-- helper method returning descriptive text on 
+        a reset button-->
+        <%= reset_sort_filter_button_text %>
+    </small> 
+    <form action="<%=movies_url%>" method="get">
+        <%= auth_token %>
+
+        <input type="hidden" name="filter[poster]" value="<%= params[:filter][:poster] if params[:filter] %>">
+
+        <input type="submit" value="✖">
+    </form>
+</li>
