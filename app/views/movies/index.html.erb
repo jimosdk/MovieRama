@@ -1,0 +1,30 @@
+<!-- This is the Homepage-->
+<section>
+    <header>
+        <!--Form for sorting filter-->
+        <%= render 'sort_filter_form' %>
+
+        <!-- Button for resetting all filters -->
+        <%= button_to  'Reset', movies_url,method: :get %>
+
+        <ul>
+            <% if movies_are_filtered_by_poster?%>
+            <!-- If the movies are filtered by a poster display a reset button
+            for this filter-->
+                <%= render 'poster_filter_reset_button' %>
+            <% end %>
+
+            <% if movies_are_sorted? %>
+            <!-- If the sort filter is active display a reset button 
+            for this filter-->
+                <%= render 'sort_filter_reset_button' %>
+            <% end %>
+            
+        </ul>
+    </header>
+    
+    <% @movies.each do |movie| %>
+        <%= render 'movie_post', movie: movie %>
+    <% end %>
+
+</section>
