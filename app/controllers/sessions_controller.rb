@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
                                          params[:session][:password])
         if @user 
             log_in!
-            redirect_to movies_url 
+            redirect_to movies_url(filter: filter_params)                       #Passing filter_params in order to preserve active filters during login
         else  
             flash.now[:errors] = ["Invalid Credentials"]
             render :new
