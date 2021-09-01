@@ -22,6 +22,7 @@ class MoviesController < ApplicationController
             @movies = @movies.
             order(params[:filter][:sorting_field] => params[:filter][:sorting_order]) 
         end
+        render :index
     end
 
     protected
