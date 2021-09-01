@@ -1,0 +1,20 @@
+<li>
+    <small>
+        Showing 
+        <%= @user.username %>'s posts 
+    </small> 
+    <form action="<%=movies_url%>" method="get">
+        <%= auth_token %>
+
+        <input type="hidden" 
+        name="filter[sorting_field]" 
+        value="<%= params[:filter][:sorting_field] if params[:filter] %>">
+
+        <input type="hidden" 
+        name="filter[sorting_order]" 
+        value="<%= params[:filter][:sorting_order] if params[:filter] %>">
+    
+        <input type="submit" value="✖">
+    </form>
+
+</li>

@@ -1,0 +1,29 @@
+<form action="<%= movies_url%>" method="get">
+<!-- Form for passing user selected sorting options in order 
+    to display the movies sorted-->
+    <%= auth_token %>
+
+    <!-- Hidden input for preserving an existing poster filter ,if any -->
+    <input type="hidden" name="filter[poster]" value="<%= params[:filter][:poster] if params[:filter] %>">
+
+    <label for="sorting_field">Sort by</label>  
+    <select name="filter[sorting_field]" id="sorting_field">
+    <!-- prompt for selecting the sorting field ,might have an input
+    selected by default if filter is already active-->
+        <option disabled <%= 'selected' unless movies_are_sorted? %>>--</option>
+        <option value="created_at" <%= 'selected' if params[:filter] && params[:filter][:sorting_field] == 'created_at'%>>Date</option>
+        <option value="likes" <%= 'selected' if params[:filter] && params[:filter][:sorting_field] == 'likes'%>>Likes</option>
+        <option value="hates" <%= 'selected' if params[:filter] && params[:filter][:sorting_field] == 'hates'%>>Hates</option>
+    </select>
+
+    <label for="order">Order</label>  
+    <select name="filter[sorting_order]" id="order">
+    <!-- prompt for selecting the sorting order ,might have an input
+    selected by default if filter is already active-->
+        <option disabled <%= 'selected' unless movies_are_sorted? %>>--</option>
+        <option value="asc" <%= 'selected' if params[:filter] && params[:filter][:sorting_order]== 'asc'%>>Oldest</option>
+        <option value="desc" <%= 'selected' if params[:filter] && params[:filter][:sorting_order] == 'desc'%>>Most recent</option>
+    </select>
+
+    <input type="submit" value="Apply">
+</form>
