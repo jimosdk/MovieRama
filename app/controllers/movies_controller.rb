@@ -1,9 +1,11 @@
 class MoviesController < ApplicationController 
     helper_method :movies_are_sorted?,:movies_are_filtered_by_poster?
+    
+    before_action :require_current_user, only: [:new,:create]
 
     def index 
         #Filter state is preserved when configuring/updating filters,
-        #during log in and when creating/editing/deleting a post.
+        #during log in.
         #This is achieved by passing a filters param values until a filter is 
         #disabled.Filter params are : param[:filter][:poster],
         #param[:filter][:sorting_field],param[:filter][:sorting_order]
@@ -25,7 +27,26 @@ class MoviesController < ApplicationController
         render :index
     end
 
+    def new 
+        @movie = Movie.new 
+    end
+
+    def create 
+        @movie = Movie.new(movie_params)
+        @movie.poster_id = current_user.id 
+        if @movie.save 
+            redirect_to movies_url(filter: filter_params)
+        else
+            flash.now[:errors] = @movie.errors.full_messages
+            render :new 
+        end
+    end
+
     protected
+
+    def movie_params
+        params.require(:movie).permit(:title,:description)
+    end
 
     def movies_are_sorted?
         params[:filter] && !params[:filter][:sorting_field].blank?
