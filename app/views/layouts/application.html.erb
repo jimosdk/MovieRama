@@ -6,26 +6,45 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!--<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %> -->
   </head>
 
   <body>
+
     <header>
       <nav>
+        <!-- Title is link to homepage -->
         <h1>
           <%= link_to 'MovieRama', movies_url %>
         </h1>
+
           <% if current_user %>
+          <!-- if there is a signed in user display Welcome message ,
+          his name and a log out button-->
             <small>Welcome back</small>
-            <%= link_to current_user.username, movies_url %>          <!-- Remember to change the action here to sort_movies_url when movie controller is implemented-->
+
+            <!-- Username is a link to displaying only the users posts-->
+            <!-- Filters are passed through ,the query string, to params[:filter]-->
+            <%= link_to current_user.username,
+              movies_url(filter: {poster: current_user, 
+              sorting_field: "#{params[:filter][:sorting_field] if params[:filter]}",
+              sorting_order: "#{params[:filter][:sorting_order] if params[:filter]}"}) 
+            %>
+
             <%= button_to 'Log out', session_url, method: :delete %>
+
           <% else %>
-            <%= link_to 'Log in', new_session_url %> or 
+          <!-- else displays Log in and Sign up links-->
+            <%= link_to 'Log in', new_session_url(filter: filter_params) %> or 
+
             <%= button_to 'Sign up', new_user_url,method: :get %>
+
           <% end %>
         </ul>
       </nav>
     </header>
+
     <%= yield %>
+
   </body>
 </html>
