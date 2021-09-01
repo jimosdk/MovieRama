@@ -1,0 +1,20 @@
+<article>
+<!-- Article contains details of a single movie post-->
+    <h1> <%= movie.title.capitalize %></h1>
+
+    <small>
+    <!-- Username is a link to displaying only the users posts-->
+    <!-- Filters are passed through ,the query string, to params[:filter]-->
+        Posted by 
+        <%= link_to movie.poster == current_user ? 'You' : movie.poster.username,
+            movies_url(filter: {poster: movie.poster,
+            sorting_field: "#{params[:filter][:sorting_field] if params[:filter]}",
+            sorting_order: "#{params[:filter][:sorting_order] if params[:filter]}"})
+        %> 
+        <%= movie.date_posted %>
+    </small>
+    <p>
+        <%= movie.description %>
+    </p>
+
+</article>
