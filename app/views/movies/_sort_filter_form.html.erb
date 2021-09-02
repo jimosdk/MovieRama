@@ -21,8 +21,8 @@
     <!-- prompt for selecting the sorting order ,might have an input
     selected by default if filter is already active-->
         <option disabled <%= 'selected' unless movies_are_sorted? %>>--</option>
-        <option value="asc" <%= 'selected' if params[:filter] && params[:filter][:sorting_order]== 'asc'%>>Oldest</option>
-        <option value="desc" <%= 'selected' if params[:filter] && params[:filter][:sorting_order] == 'desc'%>>Most recent</option>
+        <option value="asc" <%= 'selected' if params[:filter] && params[:filter][:sorting_order]== 'asc'%>>Ascending</option>
+        <option value="desc" <%= 'selected' if params[:filter] && params[:filter][:sorting_order] == 'desc'%>>Descending</option>
     </select>
 
     <input type="submit" value="Apply">
