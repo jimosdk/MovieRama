@@ -17,7 +17,7 @@ class Rating < ApplicationRecord
 
     validates :value, presence: true
     validates :value, inclusion: OPTIONS
-    validates :user_id, uniqueness: {scope: :post_id}#,message: "has already #{self.value}d this post"}
+    validates :user_id, uniqueness: {scope: :post_id,message: "has already rated this post"}
     validate  :not_own_post
 
     belongs_to :post,
@@ -25,9 +25,12 @@ class Rating < ApplicationRecord
 
     belongs_to :user
 
-    def not_own_post
-        own_post = Movie.exists?(id: self.post_id,poster_id: self.user_id)
-        errors.add(:base,"You can not rate your own post") if own_post
-    end
 
+    private
+
+    def not_own_post
+        if User.own_post(self.user_id,self.post_id)
+            errors.add(:base,"You can not rate your own post") 
+        end
+    end
 end
