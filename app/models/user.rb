@@ -76,6 +76,10 @@ class User < ApplicationRecord
         ratings.where(post_id: movie.id).pluck(:value).first
     end
 
+    def self.own_post(user_id,post_id)
+        joins(:posts).exists?(movies: {id: post_id},id: user_id)
+    end
+
     private 
 
     def self.generate_session_token
