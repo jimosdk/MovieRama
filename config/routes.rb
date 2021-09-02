@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new,:create,]
 
-  resources :movies, only: [:index,:new,:create]
+  resources :movies, only: [:index,:new,:create] do 
+    resources :ratings, only: [:create]
+  end
+
+  resources :ratings ,only: [:update,:destroy]
 
   get '/' ,to: "movies#index"        
 end
