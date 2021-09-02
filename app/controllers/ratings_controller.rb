@@ -53,7 +53,7 @@ class RatingsController < ApplicationController
         redirect_to movies_url(filter: filter_params) unless current_user && current_user.id ==  @rating.user_id
     end
 
-    def require_not_author_of_post #code should  be moved go to application controller
+    def require_not_author_of_post 
         #check if rating user is the author of the rated post
         redirect_to movies_url(filter: filter_params) if User.own_post(current_user.id,params[:movie_id])
     end
