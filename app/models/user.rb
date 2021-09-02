@@ -72,6 +72,10 @@ class User < ApplicationRecord
         hates.joins(:post).exists?(post_id: post.id,value: 'hate')
     end
 
+    def post_rating(movie)
+        ratings.where(post_id: movie.id).pluck(:value).first
+    end
+
     private 
 
     def self.generate_session_token
