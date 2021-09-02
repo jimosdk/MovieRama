@@ -24,8 +24,29 @@ class Movie < ApplicationRecord
     validates :title, uniqueness: {scope: :poster_id, message: "has already been used in another of your posts"}
 
     belongs_to :poster,
-        class_name: :User,
+        class_name: :User
+
+    has_many :ratings,
+        foreign_key: :post_id,
         dependent: :destroy
+
+    has_many :likes,
+        ->(rating){where(value: 'like')},
+        foreign_key: :post_id,
+        class_name: :Rating
+
+    has_many :hates,
+        ->(rating){where(value: 'hate')},
+        foreign_key: :post_id,
+        class_name: :Rating
+
+    def number_of_likes
+        likes.size
+    end
+
+    def number_of_hates
+        hates.size
+    end
 
     def date_posted
         time_ago_in_words(self.created_at) + " ago"
