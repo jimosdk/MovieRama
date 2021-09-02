@@ -24,23 +24,11 @@ class MoviesController < ApplicationController
             case params[:filter][:sorting_field]
             when 'created_at'
                 @movies = @movies.
-                order(create_at: params[:filter][:sorting_order]) 
+                order(created_at: params[:filter][:sorting_order]) 
             when 'likes'
-                @movies = @movies.
-                select("movies.*").
-                joins(:ratings).
-                where(ratings:{value: 'like'}).
-                group(:id).
-                order("COUNT(movies.id) #{params[:filter][:sorting_order].upcase}")
-                #order(ratings: params[:filter][:sorting_order])
+                @movies = @movies.sort_based_on_rating('like',params[:filter][:sorting_order])
             when 'hates'
-                @movies= @movies.
-                select("movies.*").
-                joins(:ratings).
-                where(ratings:{value: 'hate'}).
-                group(:id).
-                order("COUNT(movies.id) #{params[:filter][:sorting_order].upcase}")
-                #order(ratings: params[:filter][:sorting_order])
+                @movies = @movies.sort_based_on_rating('hate',params[:filter][:sorting_order])
             end
         end
         render :index

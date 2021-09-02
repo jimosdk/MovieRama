@@ -40,6 +40,14 @@ class Movie < ApplicationRecord
         foreign_key: :post_id,
         class_name: :Rating
 
+    def self.sort_based_on_rating(field,order)
+        select("movies.*").
+        joins(:ratings).
+        where(ratings:{value: field}).
+        group(:id).
+        order("COUNT(movies.id) #{order.upcase}")
+    end
+
     def number_of_likes
         likes.size
     end
