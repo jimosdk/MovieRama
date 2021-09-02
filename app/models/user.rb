@@ -24,7 +24,24 @@ class User < ApplicationRecord
 
     has_many :posts,
         foreign_key: :poster_id,
-        class_name: :Movie
+        class_name: :Movie,
+        dependent: :destroy
+
+    has_many :ratings,
+        foreign_key: :user_id,
+        dependent: :destroy
+
+    has_many :likes,
+        ->(rating){where(value: 'like')},
+        foreign_key: :user_id,
+        class_name: :Rating
+
+    has_many :hates,
+        ->(rating){where(value: 'hate')},
+        foreign_key: :user_id,
+        class_name: :Rating
+
+    
 
    def self.find_by_credentials(username,password)
         user = User.find_by(username: username)
@@ -45,6 +62,14 @@ class User < ApplicationRecord
         self.session_token = User.generate_session_token while User.where.not(id: self.id).exists?(session_token: self.session_token)
         self.save!
         self.session_token
+    end
+
+    def likes?(post)
+        likes.joins(:post).exists?(post_id: post.id,value: 'like')
+    end
+
+    def hates?(post)
+        hates.joins(:post).exists?(post_id: post.id,value: 'hate')
     end
 
     private 
