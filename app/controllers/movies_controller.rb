@@ -19,10 +19,29 @@ class MoviesController < ApplicationController
             @movies = Movie.includes(:poster).all
         end
 
-        if movies_are_sorted?
+        if movies_are_sorted? && %w(asc desc).include?(params[:filter][:sorting_order])
             #Sort movie posts by poster,if filter params are valid
-            @movies = @movies.
-            order(params[:filter][:sorting_field] => params[:filter][:sorting_order]) 
+            case params[:filter][:sorting_field]
+            when 'created_at'
+                @movies = @movies.
+                order(create_at: params[:filter][:sorting_order]) 
+            when 'likes'
+                @movies = @movies.
+                select("movies.*").
+                joins(:ratings).
+                where(ratings:{value: 'like'}).
+                group(:id).
+                order("COUNT(movies.id) #{params[:filter][:sorting_order].upcase}")
+                #order(ratings: params[:filter][:sorting_order])
+            when 'hates'
+                @movies= @movies.
+                select("movies.*").
+                joins(:ratings).
+                where(ratings:{value: 'hate'}).
+                group(:id).
+                order("COUNT(movies.id) #{params[:filter][:sorting_order].upcase}")
+                #order(ratings: params[:filter][:sorting_order])
+            end
         end
         render :index
     end
