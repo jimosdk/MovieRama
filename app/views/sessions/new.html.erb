@@ -1,4 +1,4 @@
-
+<section class="form">
 
 <h2>Log in</h2>
 
@@ -10,12 +10,20 @@ filters during log in-->
 <form action="<%= session_url(filter: filter_params) %>" method="post">
     <%= auth_token %>
 
-    <label for="username">Username</label>
-    <input type="text" name="session[username]" id="username">
+    <!--<label for="username">Username</label>-->
+    <input type="text" 
+            name="session[username]" 
+            id="username" 
+            placeholder="Username">
 
-    <label for="password">Password</label>
-    <input type="password" name="session[password]" id="password">
+    <!-- <label for="password">Password</label> -->
+    <input type="password" 
+            name="session[password]" 
+            id="password" 
+            placeholder="Password">
 
     <input type="submit" value="Log in">
 </form>
+
+</section>
 

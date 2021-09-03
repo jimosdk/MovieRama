@@ -1,9 +1,9 @@
-<section>
-<h1>Make a new movie post</h1>
+<section class="form">
+<h2>Make a new movie post</h2>
 
 <%= render 'shared/errors' %>
 
-<form action="<%=movies_url%>" method="post">
+<form id="new_movie_form" action="<%=movies_url%>" method="post">
         <%= auth_token %>
 
         <label for="title">Title</label>

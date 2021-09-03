@@ -1,15 +1,28 @@
-<h2>Sign up</h2>
+<section class="form">
 
-<%= render 'shared/errors' %>
+    <h2>Sign up</h2>
 
-<form action="<%= users_url %>" method="post">
-    <%= auth_token %>
+    <%= render 'shared/errors' %>
 
-    <label for="username">Username</label>
-    <input type="text" name="user[username]" id="username" value="<%= @user.username if @user %>" >
+    <form action="<%= users_url %>" method="post">
+        <%= auth_token %>
 
-    <label for="password">Password</label>
-    <input type="password" name="user[password]" id="password" value="<%= @user.password if @user %>">
+        <!--<label for="username">Username</label>-->
+        <input type="text" 
+                name="user[username]" 
+                id="username" 
+                <%= !@user.username.blank? ? 
+                    "value=#{@user.username}" :
+                    "placeholder=Username"
+                %>>
 
-    <input type="submit" value="Sign up">
-</form>
+        <!--<label for="password">Password</label>-->
+        <input type="password" 
+                name="user[password]" 
+                id="password" 
+                placeholder=Password>
+
+        <input type="submit" value="Sign up">
+    </form>
+
+</section>

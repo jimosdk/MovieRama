@@ -10,8 +10,13 @@
   </head>
 
   <body>
+    
+    <header class="header">
 
-    <header>
+      <!--Display logout button if user is signed in-->
+      <% if current_user %>
+        <%= button_to 'Log out', session_url, method: :delete %>
+      <% end %>
       <nav>
         <!-- Title is link to homepage -->
         <h1>
@@ -20,27 +25,27 @@
 
           <% if current_user %>
           <!-- if there is a signed in user display Welcome message ,
-          his name and a log out button-->
-            <small>Welcome back</small>
+          his name-->
+            <small class="header_small_1">Welcome back
 
-            <!-- Username is a link to displaying only the users posts-->
-            <!-- Filters are passed through ,the query string, to params[:filter]-->
-            <%= link_to current_user.username,
-              movies_url(filter: {poster: current_user, 
-              sorting_field: "#{params[:filter][:sorting_field] if params[:filter]}",
-              sorting_order: "#{params[:filter][:sorting_order] if params[:filter]}"}) 
-            %>
-
-            <%= button_to 'Log out', session_url, method: :delete %>
-
+              <!-- Username is a link to displaying only the users posts-->
+              <!-- Filters are passed through ,the query string, to params[:filter]-->
+              <%= link_to current_user.username,
+                movies_url(filter: {poster: current_user, 
+                sorting_field: "#{params[:filter][:sorting_field] if params[:filter]}",
+                sorting_order: "#{params[:filter][:sorting_order] if params[:filter]}"}) 
+              %>
+            </small>
+            
           <% else %>
-          <!-- else displays Log in and Sign up links-->
-            <%= link_to 'Log in', new_session_url(filter: filter_params) %> or 
+            <!-- else displays Log in and Sign up links-->
+            <small class="header_small_2">
+              <%= link_to 'Log in', new_session_url(filter: filter_params) %> or  
 
-            <%= button_to 'Sign up', new_user_url,method: :get %>
-
+              <%= button_to 'Sign up', new_user_url,method: :get %>
+            </small>
           <% end %>
-        </ul>
+          
       </nav>
     </header>
 

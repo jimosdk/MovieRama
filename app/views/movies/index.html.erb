@@ -1,6 +1,5 @@
 <!-- This is the Homepage-->
-<section>
-    <header>
+<section class="filter_bar">
         <!--Form for sorting filter-->
         <%= render 'sort_filter_form' %>
 
@@ -21,12 +20,16 @@
             <% end %>
             
         </ul>
-    </header>
-    
+</section>
+
+<section class="articles_section">
+       
     <% @movies.each do |movie| %>
         <%= render 'movie_post', movie: movie %>
     <% end %>
-
+   
 </section>
+<% if current_user %>
+    <%= render 'new_movie_button' %>
+<% end %>
 
-<%= render 'new_movie_button' %>

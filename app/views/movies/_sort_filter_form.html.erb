@@ -6,7 +6,7 @@
     <!-- Hidden input for preserving an existing poster filter ,if any -->
     <input type="hidden" name="filter[poster]" value="<%= params[:filter][:poster] if params[:filter] %>">
 
-    <label for="sorting_field">Sort by</label>  
+    <label for="sorting_field">Sort by:</label>  
     <select name="filter[sorting_field]" id="sorting_field">
     <!-- prompt for selecting the sorting field ,might have an input
     selected by default if filter is already active-->
@@ -16,7 +16,7 @@
         <option value="hates" <%= 'selected' if params[:filter] && params[:filter][:sorting_field] == 'hates'%>>Hates</option>
     </select>
 
-    <label for="order">Order</label>  
+    <label for="order">Order:</label>  
     <select name="filter[sorting_order]" id="order">
     <!-- prompt for selecting the sorting order ,might have an input
     selected by default if filter is already active-->
