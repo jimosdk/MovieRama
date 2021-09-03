@@ -1,0 +1,35 @@
+/*ARTICLES SECTION*/
+.articles_section{
+
+    grid-row: 3 / auto;
+    grid-column-start: 1;
+}
+
+.articles_section article{
+    padding:10px;
+    margin-bottom: 20px;
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+.articles_section article h1{
+    font-size: 27px;
+    font-weight:bold;
+}
+
+.articles_section article ul{
+    display:flex;
+    justify-content: space-between;
+}
+
+.articles_section form {
+    display:inline-block;
+}
+
+.articles_section form input {
+    color:blue;
+}
+
+.articles_section form input:hover{
+    color:rgb(88, 17, 155);
+}
