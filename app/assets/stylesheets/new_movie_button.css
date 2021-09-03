@@ -1,0 +1,22 @@
+/*NEW MOVIE BUTTON*/
+.new_movie_button{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    grid-row-start: 3;
+    grid-column-start: 2;
+}
+
+.new_movie_button input{
+    color: white;
+    background-color: rgb(107, 160, 107);
+    padding:10px 48px;
+    border-radius: 50px;
+    border:2px solid rgb(40, 107, 40);
+    font-size:14px;
+}
+
+.new_movie_button input:hover{
+    background-color:rgb(92, 22, 22);
+    border-color:rgb(53, 5, 5);
+}
