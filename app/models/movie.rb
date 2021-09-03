@@ -41,11 +41,18 @@ class Movie < ApplicationRecord
         class_name: :Rating
 
     def self.sort_based_on_rating(field,order)
-        select("movies.*").
-        joins(:ratings).
-        where(ratings:{value: field}).
-        group(:id).
-        order("COUNT(movies.id) #{order.upcase}")
+        joins(<<-SQL)
+            LEFT OUTER JOIN 
+            (SELECT movies.id AS id,COUNT(*) AS num 
+            FROM movies 
+            INNER JOIN ratings 
+            ON movies.id = ratings.post_id 
+            WHERE ratings.value = '#{field}' 
+            GROUP BY movies.id) AS counts 
+            ON movies.id = counts.id
+        SQL
+        .group("movies.id,counts.id,counts.num").
+        order("COALESCE(counts.num,0) #{order.upcase}")
     end
 
     def number_of_likes
