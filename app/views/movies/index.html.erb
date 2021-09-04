@@ -1,4 +1,7 @@
 <!-- This is the Homepage-->
+<% temp = current_user_preload %>
+<% current_user = temp %>
+
 <section class="filter_bar">
         <!--Form for sorting filter-->
         <%= render 'sort_filter_form' %>
@@ -25,10 +28,11 @@
 <section class="articles_section">
        
     <% @movies.each do |movie| %>
-        <%= render 'movie_post', movie: movie %>
+        <%= render 'movie_post' ,current_user: current_user ,movie: movie %>
     <% end %>
    
 </section>
+
 <% if current_user %>
     <%= render 'new_movie_button' %>
 <% end %>
