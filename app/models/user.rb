@@ -64,14 +64,6 @@ class User < ApplicationRecord
         self.session_token
     end
 
-    # def likes?(post)
-    #     likes.exists?(post_id: post.id,value: 'like')
-    # end
-
-    # def hates?(post)
-    #     hates.exists?(post_id: post.id,value: 'hate')
-    # end
-
     def post_rating(movie)
         ratings.each do |rating|
             return rating if rating.post_id == movie.id
