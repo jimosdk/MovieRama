@@ -2,35 +2,55 @@
 <!-- Like/Hate/Unlike/Unhate button display logic-->
 <ul>
     <!-- Check if user has rated this movie-->
-    <%post_rated = current_user && current_user.post_rating(movie) ? true : false%>
+    <% rating = current_user.post_rating(movie) if current_user %>
+
     <!--Find the specific ratings entry-->
-    <% rating = Rating.find_by(post_id: movie.id,user_id: current_user.id) if post_rated%>
-    <% if current_user && !post_rated && !User.own_post(current_user.id,movie.id)%>
+    <% if current_user && !rating && !current_user.own_post(movie.id)%>
     <!--If user is signed up ,hasn't rated this movie and 
     this movie is not his own post-->
-
-       
-        <li>
-            <small>
-                 <!-- Like button-->
-                <%= button_to "#{movie.number_of_likes} likes",
-                    movie_ratings_url(movie,
-                                rating:{value: 'like'},
-                                filter: filter_params),
-                    method: :post 
-                %> | 
-                <!-- Hate button-->
-                <%= button_to "#{movie.number_of_hates} hates",
-                    movie_ratings_url(movie,
-                                    rating:{value: 'hate'},
+        <% likes,hates = movie.number_of_likes,movie.number_of_hates %>
+        <% if likes == 0 && hates == 0 %>
+            <li>
+                <small>
+                <!-- Like button-->
+                    Be the first to vote for this movie:     
+                    <%= button_to "Like",
+                        movie_ratings_url(movie,
+                                    rating:{value: 'like'},
                                     filter: filter_params),
-                    method: :post 
-                %>
-            </small>
-        </li>
-    <%elsif current_user && current_user.likes?(movie) %>
+                        method: :post 
+                    %>  |   
+                    <!-- Hate button-->
+                    <%= button_to "Hate",
+                        movie_ratings_url(movie,
+                                        rating:{value: 'hate'},
+                                        filter: filter_params),
+                        method: :post 
+                    %>
+                </small>
+            </li>
+        <% else %>
+            <li>
+                <small>
+                    <!-- Like button-->
+                    <%= button_to "#{likes} likes",
+                        movie_ratings_url(movie,
+                                    rating:{value: 'like'},
+                                    filter: filter_params),
+                        method: :post 
+                    %> | 
+                    <!-- Hate button-->
+                    <%= button_to "#{hates} hates",
+                        movie_ratings_url(movie,
+                                        rating:{value: 'hate'},
+                                        filter: filter_params),
+                        method: :post 
+                    %>
+                </small>
+            </li>
+        <% end %>
+    <%elsif current_user && rating && rating.value == 'like' %>
     <!-- If user is signed up and has already liked this movie -->
-
         
         <li>
             <small>
@@ -59,7 +79,7 @@
                 %>
             </small>
         </li>
-    <% elsif current_user && current_user.hates?(movie) %>
+    <% elsif current_user && rating && rating.value == 'hate'%>
     <!-- As described above but this time user has hated this movie-->
         <li>
             <small>
@@ -84,11 +104,14 @@
         </li>
     <% else%>
         <!-- Displays only text for unsigned users or post owners-->
-        <li>
-            <small>
-                <%= movie.number_of_likes %> <%= 'likes' %> | 
-                <%= movie.number_of_hates %> <%= 'hates' %>
-            </small>
-        </li> 
+        <% likes,hates = movie.number_of_likes,movie.number_of_hates %>
+        <% unless likes == 0 && hates == 0 %>
+            <li>
+                <small>
+                    <%= movie.number_of_likes %> <%= 'likes' %> | 
+                    <%= movie.number_of_hates %> <%= 'hates' %>
+                </small>
+            </li> 
+        <%end%>
     <% end %>
 </ul>
