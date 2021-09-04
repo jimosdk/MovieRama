@@ -31,12 +31,12 @@ class Movie < ApplicationRecord
         dependent: :destroy
 
     has_many :likes,
-        ->(rating){where(value: 'like')},
+        ->{where(value: 'like')},
         foreign_key: :post_id,
         class_name: :Rating
 
     has_many :hates,
-        ->(rating){where(value: 'hate')},
+        ->{where(value: 'hate')},
         foreign_key: :post_id,
         class_name: :Rating
 
