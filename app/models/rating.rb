@@ -29,7 +29,7 @@ class Rating < ApplicationRecord
     private
 
     def not_own_post
-        if User.own_post(self.user_id,self.post_id)
+        if User.find_by(id: self.user_id).own_post(self.post_id)
             errors.add(:base,"You can not rate your own post") 
         end
     end
