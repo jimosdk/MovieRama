@@ -14,11 +14,11 @@
  *= require_self
  */
  
-@import url(app/assets/stylesheets/header.css);
-@import url(app/assets/stylesheets/filter_bar.css);
-@import url(app/assets/stylesheets/new_movie_button.css);
-@import url(app/assets/stylesheets/article_section.css);
-@import url(app/assets/stylesheets/form.css);
+/* @import url(stylesheets/header.css);
+@import url(stylesheets/filter_bar.css);
+@import url(stylesheets/new_movie_button.css);
+@import url(stylesheets/article_section.css);
+@import url(stylesheets/form.css); */
 
 /* CSS RESET*/
  header,section,form,ul,li,a,h1,h2,
