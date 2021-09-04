@@ -18,6 +18,10 @@
     
     <header class="header">
 
+      
+      <% temp = current_user %>
+      <% current_user = temp %>
+      
       <!--Display logout button if user is signed in-->
       <% if current_user %>
         <%= button_to 'Log out', session_url, method: :delete %>
@@ -27,7 +31,6 @@
         <h1>
           <%= link_to 'MovieRama', movies_url %>
         </h1>
-
           <% if current_user %>
           <!-- if there is a signed in user display Welcome message ,
           his name-->
