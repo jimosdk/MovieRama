@@ -64,20 +64,26 @@ class User < ApplicationRecord
         self.session_token
     end
 
-    def likes?(post)
-        likes.joins(:post).exists?(post_id: post.id,value: 'like')
-    end
+    # def likes?(post)
+    #     likes.exists?(post_id: post.id,value: 'like')
+    # end
 
-    def hates?(post)
-        hates.joins(:post).exists?(post_id: post.id,value: 'hate')
-    end
+    # def hates?(post)
+    #     hates.exists?(post_id: post.id,value: 'hate')
+    # end
 
     def post_rating(movie)
-        ratings.where(post_id: movie.id).pluck(:value).first
+        ratings.each do |rating|
+            return rating if rating.post_id == movie.id
+        end
+        nil
     end
 
-    def self.own_post(user_id,post_id)
-        joins(:posts).exists?(movies: {id: post_id},id: user_id)
+    def own_post(post_id)
+        posts.each do |post|
+            return true if post.id == post_id
+        end
+        false 
     end
 
     private 
