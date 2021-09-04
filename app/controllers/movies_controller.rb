@@ -13,10 +13,10 @@ class MoviesController < ApplicationController
         if movies_are_filtered_by_poster?
             #Filter movie posts by poster,if filter params are valid
             @user = User.find_by(id: params[:filter][:poster])
-            @movies = @user.posts
+            @movies = @user.posts.includes(:likes,:hates)
         else
             #otherwise fetch all movies and preload corresponding posters 
-            @movies = Movie.includes(:poster).all
+            @movies = Movie.includes(:poster,:likes,:hates).all
         end
 
         if movies_are_sorted? && %w(asc desc).include?(params[:filter][:sorting_order])
@@ -56,7 +56,9 @@ class MoviesController < ApplicationController
     end
 
     def movies_are_sorted?
-        params[:filter] && !params[:filter][:sorting_field].blank?
+        params[:filter] &&
+        !params[:filter][:sorting_field].blank? &&
+        !params[:filter][:sorting_order].blank?
     end
 
     def movies_are_filtered_by_poster?
