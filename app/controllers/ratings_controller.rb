@@ -55,6 +55,6 @@ class RatingsController < ApplicationController
 
     def require_not_author_of_post 
         #check if rating user is the author of the rated post
-        redirect_to movies_url(filter: filter_params) if User.own_post(current_user.id,params[:movie_id])
+        redirect_to movies_url(filter: filter_params) if current_user.own_post(params[:movie_id])
     end
 end
